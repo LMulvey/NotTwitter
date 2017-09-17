@@ -1,0 +1,35 @@
+{
+  "name": "nottwitter",
+  "version": "1.0.0",
+  "description": "Fifty percent chance that this isn't a Twitter clone.",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js",
+    "local": "./node_modules/.bin/nodemon --watch server -e js server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LMulvey/nottwitter.git"
+  },
+  "keywords": [
+    "nottwitter",
+    "maybe",
+    "twitter"
+  ],
+  "author": "Lee Mulvey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LMulvey/nottwitter/issues"
+  },
+  "homepage": "https://github.com/LMulvey/nottwitter#readme",
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "chance": "^1.0.11",
+    "express": "^4.15.4",
+    "md5": "^2.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
