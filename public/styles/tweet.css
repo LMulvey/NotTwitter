@@ -1,0 +1,47 @@
+.tweet-container {
+    margin: 2em 0;
+    border: 1px solid #B1A8A8;
+    border-radius: 6px;
+    opacity: 0.75;
+    transition: 1s;
+}
+
+.tweet-container:hover {
+    transition: 1s;
+    opacity: 1;
+}
+
+.tweet-container img {
+    width: 64px;
+    height: 64px;
+    border-radius: 6px;
+}
+
+.tweet-header {
+    background-color: #eeeeee;
+    padding: 0.5em;
+}
+
+.tweet-footer {
+    padding: 0.5em;
+    border-top: 1px solid #B1A8A8;
+    font-size: 14px;
+}
+
+.tweet-footer .icons {
+    float: right;
+}
+
+.real-name {
+    font-size: 28px;
+    vertical-align: top;
+}
+
+.twitter-handle {
+    float: right;
+    line-height: 36px;
+}
+
+.tweet-message {
+    padding: 2em 0.5em;
+}

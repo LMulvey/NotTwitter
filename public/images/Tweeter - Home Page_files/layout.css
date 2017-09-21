@@ -29,3 +29,27 @@ body {
     padding: 2em;
     background-color: #ffffff;
 }
+
+.new-tweet {
+    padding: 0 2em;
+    background-color: #eeeeee;
+    border: 1px solid #B1A8A8;
+    border-radius: 5px;
+}
+
+.new-tweet h2 {
+    width: 100%;
+}
+
+.new-tweet textarea {
+    width: 100%;
+    padding: 0.5em;
+}
+
+.new-tweet input {
+    display: inline-block;
+}
+
+/*
+* Additional CSS can be defined below or in other CSS files, as per instructions
+*/
