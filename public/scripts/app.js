@@ -67,6 +67,10 @@ $(document).ready(() => {
         } else $('#tweets-container').prepend(createTweetElement(data));
     }
 
+    function getTweets() {
+        $.get('/tweets').then(renderTweets);
+    }
+
     $('#composeTweet').on('submit', function (event) {
 
         event.preventDefault();
@@ -78,12 +82,11 @@ $(document).ready(() => {
         if(text.length > 140) {
             createFlash('error', 'More than 140 characters entered.');
         } else {
-            $.post('/tweets', data, renderTweets);
+            $.post('/tweets', data, () => getTweets());
             $(this).find('textarea').val('').keydown();
             createFlash('success', 'Tweet successfully posted!');
         }
     });
 
-
-    $.get('/tweets').then(renderTweets);
+    getTweets();
 });
