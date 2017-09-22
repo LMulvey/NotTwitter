@@ -21,9 +21,19 @@
     display: inline-block;
 }
 
-.new-tweet span {
+ #counter {
     display: inline-block;
     font-style: italic;
     float: right;
     line-height: 24px;
+}
+
+#flash-holder {
+    width: 100%;
+    color: white;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin: 0.4em 0;
+    padding: 0.5em;
+    display: none;
 }

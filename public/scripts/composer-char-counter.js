@@ -1,27 +1,27 @@
 $(document).ready(() => {
     const maxChars = 140,
-    textArea = $("textarea[name='text']"),
-    counter = textArea.nextAll().last(),
-    tweetButton = textArea.next(),
     errorColour = 'red';
 
-    textArea.keydown(() => {
-        let chars = textArea.val().length;
+    //disable Tweet button ifthe value is empty
+    if($("textarea[name='text']").val() == '') {
+        $("textarea[name='text']").next().attr('disabled', true);
+    }
+
+    $("textarea[name='text']").keyup(function() {
+        let chars = $(this).val().length;
         let remaining = maxChars - chars;
+        let counter = $(this).nextAll().last();
 
-        if(remaining <=0) {
+        if(remaining <= 0) {
             counter.css('color', errorColour);
-            tweetButton.prop('disabled', true);
-
             counter.text(maxChars - chars);
+            //$(this).next().attr('disabled', true); 
+            // Let the user try and post a tweet. See what happens!
         } else {
-            counter.css('color', '#244751');
-            tweetButton.prop('disabled', false);
-
+            counter.css('color', '#244751'); // Reset to default color
             counter.text(maxChars - chars);
-        }
-
-        
+            $(this).next().attr('disabled', false);
+        }  
     });
 
 });

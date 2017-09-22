@@ -1,5 +1,8 @@
-$(document).ready(() => {    
-    let timeSince = (date) => {
+$(document).ready(() => {   
+    let error = $('#error'),
+    success = $('#success');
+    
+    function timeSince(date) {
         const seconds = Math.floor((new Date() - date) / 1000);
         let interval = Math.floor(seconds / 31536000);
 
@@ -20,7 +23,20 @@ $(document).ready(() => {
         return Math.floor(seconds) + " seconds ago";
     }
 
-    const createTweetElement = (data) => {
+    function createFlash(type, message) {
+        let target = $('#flash-holder');
+        if(type == 'success') {
+            target.css('background-color', '#2BA152');
+            target.html('<strong>Success!</strong> ' + message);
+        }
+        if(type == 'error') {
+            target.css('background-color', '#A12B2B');
+            target.html('<strong>Error!</strong> ' + message);
+        }
+        target.fadeToggle(3600, 'swing', target.fadeToggle(400, 'swing'));
+    }
+
+    function createTweetElement(data) {
         let tweet = '<article class="tweet"> \
             <header class="tweet-header"> \
                 <img src="' + data.user.avatars.small + '"> \
@@ -43,60 +59,31 @@ $(document).ready(() => {
         return tweet;
     }
 
-    const renderTweets = (data) => {
-        data.forEach((tweet) => {
-            $('#tweets-container').prepend(createTweetElement(tweet));
-        });
+    function renderTweets(data) {
+        if(data.constructor === Array) {
+            data.forEach((tweet) => {
+                $('#tweets-container').prepend(createTweetElement(tweet));
+            });
+        } else $('#tweets-container').prepend(createTweetElement(data));
     }
 
-    let tweetData = [
-        {
-          "user": {
-            "name": "Newton",
-            "avatars": {
-              "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-              "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-              "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-            },
-            "handle": "@SirIsaac"
-          },
-          "content": {
-            "text": "If I have seen further it is by standing on the shoulders of giants"
-          },
-          "created_at": 1461116232227
-        },
-        {
-          "user": {
-            "name": "Descartes",
-            "avatars": {
-              "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-              "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-              "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-            },
-            "handle": "@rd" },
-          "content": {
-            "text": "Je pense , donc je suis"
-          },
-          "created_at": 1461113959088
-        },
-        {
-          "user": {
-            "name": "Johann von Goethe",
-            "avatars": {
-              "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-              "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-              "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-            },
-            "handle": "@johann49"
-          },
-          "content": {
-            "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-          },
-          "created_at": 1461113796368
+    $('#composeTweet').on('submit', function (event) {
+
+        event.preventDefault();
+        let text = $("textarea[name='text']").val();
+        let data = $(this).serialize();
+
+        console.log(data);
+
+        if(text.length > 140) {
+            createFlash('error', 'More than 140 characters entered.');
+        } else {
+            $.post('/tweets', data, renderTweets);
+            $(this).find('textarea').val('').keydown();
+            createFlash('success', 'Tweet successfully posted!');
         }
-      ];
+    });
 
-      renderTweets(tweetData);
 
- 
+    $.get('/tweets').then(renderTweets);
 });
