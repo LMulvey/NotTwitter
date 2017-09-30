@@ -8,15 +8,15 @@ $(document).ready(() => {
         let counter = $(this).nextAll().last();
 
         //disable Tweet button ifthe value is empty
-        if(remaining == maxChars)) {
-            $("textarea[name='text']").next().attr('disabled', true);
+        if(remaining == maxChars) {
+            $(this).next().attr('disabled', true);
+        } else {
+            $(this).next().attr('disabled', false);
         }
 
         if(remaining <= 0) {
             counter.css('color', errorColour);
             counter.text(maxChars - chars);
-            //$(this).next().attr('disabled', true); 
-            // Let the user try and post a tweet. See what happens!
         } else {
             counter.css('color', '#244751'); // Reset to default color
             counter.text(maxChars - chars);

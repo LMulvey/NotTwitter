@@ -23,6 +23,24 @@ $(document).ready(() => {
         return Math.floor(seconds) + " seconds ago";
     }
 
+    function submitTweet(el) {
+        let text = $("textarea[name='text']").val();
+        let data = $(el).serialize();
+
+        console.log(data);
+
+        if(text.length > 140) {
+            createFlash('error', 'More than 140 characters entered.');
+        } else if (text.length == 0) {
+            createFlash('error', 'You need to actually say something!');
+        } else {
+            $.post('/tweets', data, () => getTweets());
+            $(el).find('textarea').val('').keyup();
+            $("textarea[name='text']").next().attr('disabled', true);
+            createFlash('success', 'Tweet successfully posted!');
+        }
+    }
+
     function createFlash(type, message) {
         let target = $('#flash-holder');
         if(type == 'success') {
@@ -71,28 +89,17 @@ $(document).ready(() => {
         $.get('/tweets').then(renderTweets);
     }
 
-    $('#composeTweet').on('submit', function (event) {
-        event.preventDefault();
-        let text = $("textarea[name='text']").val();
-        let data = $(this).serialize();
+    $('#composeTweet').on('submit', function(e) {
+        e.preventDefault();
+        submitTweet($(this));
+    });
 
-        console.log(data);
-
-        if(text.length > 140) {
-            createFlash('error', 'More than 140 characters entered.');
-        } else if (text.length == 0) {
-            createFlash('error', 'You need to actually say something!');
-        } else {
-            $.post('/tweets', data, () => getTweets());
-            $(this).find('textarea').val('').keyup();
-            $("textarea[name='text']").next().attr('disabled', true);
-            createFlash('success', 'Tweet successfully posted!');
-        }
+    $('#composeTweet').on('keydown', function(e) {
+        if(e.keyCode == 13 && e.metaKey) $(this).submit();
     });
 
     $('#composeButton').on('click', function() {
-        $('.new-tweet').slideToggle(200, () => $('textarea[name="text"').focus());
-        
+        $('.new-tweet').slideToggle(200, () => $('textarea[name="text"').focus());  
     });
 
     getTweets();
