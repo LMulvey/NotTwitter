@@ -2,15 +2,15 @@ $(document).ready(() => {
     const maxChars = 140,
     errorColour = 'red';
 
-    //disable Tweet button ifthe value is empty
-    if($("textarea[name='text']").val() == '') {
-        $("textarea[name='text']").next().attr('disabled', true);
-    }
-
     $("textarea[name='text']").keyup(function() {
         let chars = $(this).val().length;
         let remaining = maxChars - chars;
         let counter = $(this).nextAll().last();
+
+        //disable Tweet button ifthe value is empty
+        if(remaining == maxChars)) {
+            $("textarea[name='text']").next().attr('disabled', true);
+        }
 
         if(remaining <= 0) {
             counter.css('color', errorColour);

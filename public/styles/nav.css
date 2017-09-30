@@ -5,6 +5,7 @@
     height: 80px;
     max-width: 100%;
     margin: 0;
+    display: flex;
 }
 
 #nav-bar .header {
@@ -18,4 +19,27 @@
     float:left;
     width: 80px;
     height: 80px;
+}
+
+button {
+    transition: 0.4s;
+    cursor: pointer;
+    outline: none;
+}
+
+#composeButton {
+    height: 40px;
+    padding: 0.3em;
+    margin-left: auto;
+    text-align: right;
+    align-self: center;
+    background: #EEEEEE;
+    border: 1px solid #303030;
+    border-radius: 6px;
+    color: #00A087;
+    font-size: 20px;
+}
+
+#composeButton:hover {
+    background: #D1D1D1;
 }

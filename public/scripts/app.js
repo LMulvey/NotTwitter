@@ -37,24 +37,24 @@ $(document).ready(() => {
     }
 
     function createTweetElement(data) {
-        let tweet = '<article class="tweet"> \
+        let tweet = `<article class="tweet"> \
             <header class="tweet-header"> \
-                <img src="' + data.user.avatars.small + '"> \
-                <span class="real-name">' + data.user.name + '</span> \
-                <span class="twitter-handle">' + data.user.handle + '</span> \
+                <img src="${data.user.avatars.small}"> \
+                <span class="real-name">${data.user.name}</span> \
+                <span class="twitter-handle">${data.user.handle}</span> \
             </header> \
             <div class="tweet-message"> \
-                ' + data.content.text + ' \
+            ${data.content.text} \
             </div> \
             <footer class="tweet-footer"> \
-                <span class="datestamp">' + timeSince(data.created_at) + '</span> \
+                <span class="datestamp">${timeSince(data.created_at)}</span> \
                 <span class="icons"> \
                     <i class="fa fa-flag fa-fw"></i> \
                     <i class="fa fa-retweet fa-fw"></i> \
                     <i class="fa fa-heart fa-fw"></i> \
                 </span> \
             </footer> \
-            </article>';
+            </article>`;
 
         return tweet;
     }
@@ -72,7 +72,6 @@ $(document).ready(() => {
     }
 
     $('#composeTweet').on('submit', function (event) {
-
         event.preventDefault();
         let text = $("textarea[name='text']").val();
         let data = $(this).serialize();
@@ -81,11 +80,19 @@ $(document).ready(() => {
 
         if(text.length > 140) {
             createFlash('error', 'More than 140 characters entered.');
+        } else if (text.length == 0) {
+            createFlash('error', 'You need to actually say something!');
         } else {
             $.post('/tweets', data, () => getTweets());
-            $(this).find('textarea').val('').keydown();
+            $(this).find('textarea').val('').keyup();
+            $("textarea[name='text']").next().attr('disabled', true);
             createFlash('success', 'Tweet successfully posted!');
         }
+    });
+
+    $('#composeButton').on('click', function() {
+        $('.new-tweet').slideToggle(200, () => $('textarea[name="text"').focus());
+        
     });
 
     getTweets();
