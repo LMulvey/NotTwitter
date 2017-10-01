@@ -15,7 +15,7 @@ MongoClient.connect(process.env.MONGODB_URI, function (err, db) {
     console.log('Error connecting to MongoDB!');
     throw err;
   }
-  console.log(`MongoDB connected on ${MONGODB_URI}`);
+  console.log(`MongoDB connected on ${process.env.MONGODB_URI}`);
   const DataHelpers = require("./lib/data-helpers.js")(db);
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
 
