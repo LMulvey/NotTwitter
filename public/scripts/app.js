@@ -34,7 +34,7 @@ $(document).ready(() => {
         } else if (text.length == 0) {
             createFlash('error', 'You need to actually say something!');
         } else {
-            $.post('/tweets', data, () => getTweets());
+            $.post('/tweets', data, renderTweets);
             $(el).find('textarea').val('').keyup();
             $("textarea[name='text']").next().attr('disabled', true);
             createFlash('success', 'Tweet successfully posted!');
